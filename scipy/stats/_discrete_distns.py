@@ -887,6 +887,80 @@ class skellam_gen(rv_discrete):
 skellam = skellam_gen(a=-np.inf, name="skellam", longname='A Skellam')
 
 
+class yulesimon_gen(rv_discrete):
+    r"""A Yule-Simon discrete random variable.
+
+    %(before_notes)s
+
+    Notes
+    -----
+    Probability distribution common to preferential attachment models and ranks.
+    Let :math:`X` be Yule-Simon distributed r.v. with
+    expected value :math:`\alpha/(\alpha-1)` provided :math:`\alpha>1`.
+    Parameter :math:`\alpha` must be strictly positive.
+    For details see: https://en.wikipedia.org/wiki/Yule-Simon_distribution
+    `yulesimon` takes :math:`\alpha` as sole parameter.
+    Yule-Simon is a heavy tailed discrete distribution similar to the Zipf which
+    may lead to expected values either not existing of having poor numerical
+    precision if the :math:`\alpha` parameter is very small. The m
+
+    %(after_notes)s
+
+    %(example)s
+
+    """
+    def _rvs(self,alpha):
+        #TODO: put in the correct mixture representation here:
+        # uses geometrics mixture of beta r.v. representation
+        # current setup is copy from skellam
+        n = self._size
+        return (self._random_state.poisson(mu1, n) -
+                self._random_state.poisson(mu2, n))
+
+    def _pmf(self, x, alpha):
+        px=alpha * special.beta(x, alpha+1)
+        return px
+
+
+    def _argcheck(self, alpha):
+        return (alpha > 0)
+
+    def _logpmf(self, x, alpha):
+        logpx=log(alpha) + special.betaln(x, alpha+1)
+        return logpx
+
+    def _cdf(self, x, alpha):
+        Px=1 - x * special.beta(x, alpha+1)
+        return Px
+
+    def _sf(self, x, alpha):
+        Sx=x * special.beta(x, alpha+1)
+        return Sx
+
+    def _logsf(self, x, alpha):
+        logSx=log(x) + special.betaln(x, alpha+1)
+        return logSx
+
+    def _mean(self, alpha):
+        if alpha>1:
+            return alpha / (alpha -1)
+        else:
+            return float('NaN')
+    # TODO: template out these methods, list owners
+    #logcdf
+    #ppf # ppf is percent point function (quantile function for discrete r.v.s
+    #isf
+    #moment
+    #stats
+    #entropy
+    #expect
+    #median
+    #std
+    #var
+    #interval
+
+yulesimon = yulesimon_gen(name='yulesimon', a=1)
+
 # Collect names of classes and objects in this module.
 pairs = list(globals().items())
 _distn_names, _distn_gen_names = get_distribution_names(pairs, rv_discrete)
