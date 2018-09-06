@@ -909,14 +909,6 @@ class yulesimon_gen(rv_discrete):
     %(example)s
 
     """
-    def _rvs(self,alpha):
-        #TODO: put in the correct mixture representation here:
-        # uses geometrics mixture of beta r.v. representation
-        # current setup is copy from skellam
-        n = self._size
-        return (self._random_state.poisson(mu1, n) -
-                self._random_state.poisson(mu2, n))
-
     def _pmf(self, x, alpha):
         px = alpha * special.beta(x, alpha+1)
         return px
