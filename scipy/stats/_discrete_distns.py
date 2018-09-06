@@ -921,7 +921,6 @@ class yulesimon_gen(rv_discrete):
         px=alpha * special.beta(x, alpha+1)
         return px
 
-
     def _argcheck(self, alpha):
         return (alpha > 0)
 
@@ -946,18 +945,6 @@ class yulesimon_gen(rv_discrete):
             return alpha / (alpha -1)
         else:
             return float('NaN')
-    # TODO: template out these methods, list owners
-    #logcdf
-    #ppf # ppf is percent point function (quantile function for discrete r.v.s
-    #isf
-    #moment
-    #stats
-    #entropy
-    #expect
-    #median
-    #std
-    #var
-    #interval
 
 yulesimon = yulesimon_gen(name='yulesimon', a=1)
 
