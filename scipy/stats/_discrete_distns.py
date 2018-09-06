@@ -918,35 +918,36 @@ class yulesimon_gen(rv_discrete):
                 self._random_state.poisson(mu2, n))
 
     def _pmf(self, x, alpha):
-        px=alpha * special.beta(x, alpha+1)
+        px = alpha * special.beta(x, alpha+1)
         return px
 
     def _argcheck(self, alpha):
         return (alpha > 0)
 
     def _logpmf(self, x, alpha):
-        logpx=log(alpha) + special.betaln(x, alpha+1)
+        logpx = log(alpha) + special.betaln(x, alpha+1)
         return logpx
 
     def _cdf(self, x, alpha):
-        Px=1 - x * special.beta(x, alpha+1)
+        Px = 1 - x * special.beta(x, alpha+1)
         return Px
 
     def _sf(self, x, alpha):
-        Sx=x * special.beta(x, alpha+1)
+        Sx = x * special.beta(x, alpha+1)
         return Sx
 
     def _logsf(self, x, alpha):
-        logSx=log(x) + special.betaln(x, alpha+1)
+        logSx = log(x) + special.betaln(x, alpha+1)
         return logSx
 
     def _mean(self, alpha):
-        if alpha>1:
-            return alpha / (alpha -1)
+        if alpha > 1:
+            return alpha / (alpha - 1)
         else:
             return float('NaN')
 
 yulesimon = yulesimon_gen(name='yulesimon', a=1)
+
 
 # Collect names of classes and objects in this module.
 pairs = list(globals().items())
