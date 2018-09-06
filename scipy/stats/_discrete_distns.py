@@ -906,7 +906,38 @@ class yulesimon_gen(rv_discrete):
 
     %(after_notes)s
 
-    %(example)s
+    Examples
+    --------
+    >>> from scipy.stats import yulesimon
+    >>> import matplotlib.pyplot as plt
+
+    Suppose we have a collection of 20 animals, of which 7 are dogs.  Then if
+    we want to know the probability of finding a given number of dogs if we
+    choose at random 12 of the 20 animals, we can initialize a frozen
+    distribution and plot the probability mass function:
+
+    >>> [n, x, alpha] = [20, 1, 3]
+    >>> rv = yulesimon(alpha)
+    >>> x = np.arange(0, n+1)
+    >>> pmf_yulesimon = rv.pmf(x)
+
+    >>> fig = plt.figure()
+    >>> ax = fig.add_subplot(111)
+    >>> ax.plot(x, pmf_yulesimon, 'bo')
+    >>> ax.vlines(x, 0, pmf_yulesimon, lw=2)
+    >>> ax.set_xlabel('rank # of Yule-Simon')
+    >>> ax.set_ylabel('Yule-Simon PMF')
+    >>> plt.show()
+
+    Instead of using a frozen distribution we can also use `yulesimon`
+    methods directly.  To for example obtain the cumulative distribution
+    function, use:
+
+    >>> prb = yulesimon.cdf(x, alpha=3)
+
+    And to generate random numbers:
+
+    >>> R = yulesimon.rvs(alpha=3, size=10)
 
     """
     def _pmf(self, x, alpha):
