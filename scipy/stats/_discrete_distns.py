@@ -946,6 +946,7 @@ class yulesimon_gen(rv_discrete):
         else:
             return float('NaN')
 
+
 yulesimon = yulesimon_gen(name='yulesimon', a=1)
 
 
