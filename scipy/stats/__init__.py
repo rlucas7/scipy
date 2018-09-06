@@ -160,6 +160,7 @@ Discrete distributions
    skellam           -- Skellam
    zipf              -- Zipf
    yulesimon         -- Yule Simon
+
 An overview of statistical functions is given below.
 Several of these functions have a similar version in
 `scipy.stats.mstats` which work for masked arrays.
