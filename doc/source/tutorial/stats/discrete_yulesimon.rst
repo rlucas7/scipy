@@ -1,20 +1,21 @@
 
-.. _discrete-poisson:
+.. _discrete-yulesimon:
 
-Poisson Distribution
+Yule-Simon Distribution
 ====================
 
-The Poisson random variable counts the number of successes in :math:`n` independent Bernoulli trials in the limit as :math:`n\rightarrow\infty` and :math:`p\rightarrow0` where the probability of success in each trial is :math:`p` and :math:`np=\lambda\geq0` is a constant. It can be used to approximate the Binomial random
-variable or in its own right to count the number of events that occur
-in the interval :math:`\left[0,t\right]` for a process satisfying certain "sparsity" constraints. The functions are:
+The Yule-Simon random variable counts the number of 
+
+A Yule-Simon random variable has been used to model the counts of biological taxa, species within a genus etc. and has also been used to model the rank distribution of cities and to model the evolution of citation networks and more generally the vertex degree distribution of other network processes. 
+The support of the distribution is the non-negative integers :math: `\{1,2,3,\dots \}` and the single parameter :math: `\alpha >0`. 
+AIf the parameter :math: `0<\alpha<1` the mean is infinite, similar statements apply to the second and higher non-central moments. 
+The probability mass function (pmf) for the Yule-Simon distribution is: 
 
 .. math::
    :nowrap:
-
-    \begin{eqnarray*} p\left(k;\lambda\right) & = & e^{-\lambda}\frac{\lambda^{k}}{k!}\quad k\geq0,\\ F\left(x;\lambda\right) & = & \sum_{n=0}^{\left\lfloor x\right\rfloor }e^{-\lambda}\frac{\lambda^{n}}{n!}=\frac{1}{\Gamma\left(\left\lfloor x\right\rfloor +1\right)}\int_{\lambda}^{\infty}t^{\left\lfloor x\right\rfloor }e^{-t}dt,\\ \mu & = & \lambda\\ \mu_{2} & = & \lambda\\ \gamma_{1} & = & \frac{1}{\sqrt{\lambda}}\\ \gamma_{2} & = & \frac{1}{\lambda}.\end{eqnarray*}
-
+    \begin{eqnarray*} p\left(k;\alpha\right) & = & \alpha B(k, \alpha+1) \end{eqnarray*}
 .. math::
 
-    M\left(t\right)=\exp\left[\lambda\left(e^{t}-1\right)\right].
+where :math: `B(a,b)` is the beta function 
 
-Implementation: `scipy.stats.poisson`
+Implementation: `scipy.stats.yulesimon`
