@@ -966,12 +966,12 @@ class yulesimon_gen(rv_discrete):
         logSx = log(x) + special.betaln(x, alpha+1)
         return logSx
 
-    def _stats(self, alpha):
-        mu = alpha / (alpha-1) if alpha > 1 else np.nan
-        mu2 = alpha**2 / ( (alpha-1)**2 * (alpha-2)  ) if alpha > 2 else np.nan
-        g1 = (alpha+1)**2 * sqrt(alpha-2) / (alpha * (alpha-3)) if alpha > 3 else np.nan
-        g2 = -5 if alpha > 4 else np.nan
-        return mu, mu2, g1, g2
+#    def _stats(self, alpha):
+#        mu = alpha / (alpha-1) if alpha > 1 else np.nan
+#        mu2 = alpha**2 / ( (alpha-1)**2 * (alpha-2)  ) if alpha > 2 else np.nan
+#        g1 = (alpha+1)**2 * sqrt(alpha-2) / (alpha * (alpha-3)) if alpha > 3 else np.nan
+#        g2 = -5 if alpha > 4 else np.nan
+#        return mu, mu2, g1, g2
 
 
 yulesimon = yulesimon_gen(name='yulesimon', a=1)
