@@ -941,8 +941,6 @@ class yulesimon_gen(rv_discrete):
     And to generate random numbers:
 
     >>> R = yulesimon.rvs(alpha=3, size=10)
-    >>> R
-    array([2, 2, 1, 1, 1, 1, 2, 1, 1, 1])
 
     """
     def _pmf(self, x, alpha):
