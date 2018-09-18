@@ -67,4 +67,4 @@ def test_yule_simon_pmf():
     # test logsf implementation 
     assert_almost_equal(yulesimon(1).logsf(1), -0.6931471805599453, decimal=12)
     #test stats implementation 
-    assert_allclose(yulesimon(11).stats(), (1.0999999, 1.3444444, decimal=6)
+    assert_allcloseq(yulesimon(11).stats(), (1.0999999, 1.3444444),rtol=1e-4)
