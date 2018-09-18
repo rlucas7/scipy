@@ -51,7 +51,7 @@ def test_boltzmann_upper_bound():
 
 def test_yule_simon_pmf():
     # test pmf implementation
-    alpha = 5 
+    alpha = 5
     rv = yulesimon(alpha)
     ys_pmf = rv.pmf([0,1,2,3,4])
     expected = [0.0, 0.83333333, 0.11904762, 0.0297619 , 0.00992063]
@@ -67,4 +67,4 @@ def test_yule_simon_pmf():
     # test logsf implementation 
     assert_almost_equal(yulesimon(1).logsf(1), -0.6931471805599453, decimal=12)
     #test stats implementation 
-    assert_allclose(yulesimon(2).stats(), (2.0, np.nan) )
+    assert_allclose(yulesimon(2).stats(), (2.0, np.nan))
