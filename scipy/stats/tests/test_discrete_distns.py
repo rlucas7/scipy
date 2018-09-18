@@ -54,7 +54,7 @@ def test_yule_simon_pmf():
     alpha = 5
     rv = yulesimon(alpha)
     ys_pmf = rv.pmf([0, 1, 2, 3, 4])
-    expected = [0.0, 0.83333333, 0.11904762, 0.0297619 , 0.00992063]
+    expected = [0.0, 0.83333333, 0.11904762, 0.0297619, 0.00992063]
     assert_allclose(ys_pmf, expected, rtol=1e8)
     # test if negative parameter results is nan pmf 
     assert_array_equal(yulesimon(-1).pmf(1), np.nan)
@@ -67,4 +67,4 @@ def test_yule_simon_pmf():
     # test logsf implementation 
     assert_almost_equal(yulesimon(1).logsf(1), -0.6931471805599453, decimal=12)
     #test stats implementation 
-    assert_allclose(yulesimon(11).stats(), (1.0999999, 1.3444444),rtol=1e-4)
+    assert_allclose(yulesimon(11).stats('m'), (1.0999999999),rtol=1e-8)
