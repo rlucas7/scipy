@@ -2,7 +2,7 @@ from __future__ import division, print_function, absolute_import
 
 from scipy.stats import hypergeom, bernoulli, boltzmann, yulesimon
 import numpy as np
-from numpy.testing import assert_almost_equal, assert_equal, assert_allclose, assert_array_equal
+from numpy.testing import assert_almost_equal, assert_equal, assert_allclose
 
 
 def test_hypergeom_logpmf():
@@ -56,15 +56,15 @@ def test_yule_simon_pmf():
     ys_pmf = rv.pmf([0, 1, 2, 3, 4])
     expected = [0.0, 0.83333333, 0.11904762, 0.0297619, 0.00992063]
     assert_allclose(ys_pmf, expected, rtol=1e8)
-    # test if negative parameter results is nan pmf 
+    # test if negative parameter results is nan pmf
     assert_array_equal(yulesimon(-1).pmf(1), np.nan)
-    # test log_pmf function 
+    # test log_pmf function
     assert_almost_equal(yulesimon(1).logpmf(1), -0.6931471805599453, decimal=12)
-    # test cdf implementation 
-    assert_almost_equal(yulesimon(1).cdf(1), 0.5, decimal=12) 
+    # test cdf implementation
+    assert_almost_equal(yulesimon(1).cdf(1), 0.5, decimal=12)
     # test sf implementation
     assert_almost_equal(yulesimon(1).sf(1), 0.5, decimal=12)
-    # test logsf implementation 
+    # test logsf implementation
     assert_almost_equal(yulesimon(1).logsf(1), -0.6931471805599453, decimal=12)
-    #test stats implementation 
+    #test stats implementation
     assert_allclose(yulesimon(11).stats('m'), (1.0999999999),rtol=1e-8)
