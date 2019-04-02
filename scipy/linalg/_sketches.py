@@ -1,14 +1,10 @@
 """ Sketching-based Matrix Computations """
-
-# Author: Jordi Montes <jomsdev@gmail.com>
-# August 28, 2017
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
 
 from scipy._lib._util import check_random_state
-from scipy.sparse import csc_matrix
+from scipy.sparse import coo_matrix
 
 __all__ = ['clarkson_woodruff_transform']
 
@@ -47,11 +43,11 @@ def cwt_matrix(n_rows, n_columns, seed=None):
     Where the error epsilon is related to the size of S.
     """
     rng = check_random_state(seed)
-    rows = rng.randint(0, n_rows, n_columns)
-    cols = np.arange(n_columns+1)
+    rows = rng.randint(0,n_rows,n_columns)
+    cols = np.arange(n_columns)
     signs = rng.choice([1, -1], n_columns)
-    S = csc_matrix((signs, rows, cols),shape=(n_rows, n_columns))
-    return S
+    S = coo_matrix((signs,(rows,cols)),shape=(n_rows,n_columns))
+    return S.tocsc()
 
 
 def clarkson_woodruff_transform(input_matrix, sketch_size, seed=None):
@@ -63,12 +59,13 @@ def clarkson_woodruff_transform(input_matrix, sketch_size, seed=None):
 
     .. math:: \|Ax\| \approx \|A'x\|
 
+    .. math:: \|Ax\| \approx \|A'x\|
     with high probability via the Clarkson-Woodruff Transform, otherwise
     known as the CountSketch matrix.
 
     Parameters
     ----------
-    input_matrix: array_like
+    input_matrix: array_like or `scipy.sparse.spmatrix'.
         Input matrix, of shape ``(n, d)``.
     sketch_size: int
         Number of rows for the sketch.
@@ -107,7 +104,6 @@ def clarkson_woodruff_transform(input_matrix, sketch_size, seed=None):
     is in ``scipy.sparse.csc_matrix`` format gives the quickest
     computation time for sparse input.
 
-    >>> from scipy import linalg
     >>> from scipy import sparse
     >>> n_rows, n_columns, density, sketch_n_rows = 15000, 100, 0.01, 200
     >>> A = sparse.rand(n_rows, n_columns, density=density, format='csc')
@@ -122,37 +118,41 @@ def clarkson_woodruff_transform(input_matrix, sketch_size, seed=None):
     That said, this method does perform well on dense inputs, just slower
     on a relative scale.
 
+    >>> D = np.random.randn(n_rows,n_columns)
+    >>> clarkson_woodruff_transform(A) # fastest
+    >>> clarkson_woodruff_transform(B) # fast
+    >>> clarkson_woodruff_transform(C) # slower
+    >>> clarkson_woodruff_transform(D) # slowest
+
     Examples
     --------
     Given a big dense matrix ``A``:
 
-    >>> from scipy import linalg
     >>> n_rows, n_columns, sketch_n_rows = 15000, 100, 200
     >>> A = np.random.randn(n_rows, n_columns)
-    >>> sketch = linalg.clarkson_woodruff_transform(A, sketch_n_rows)
+    >>> sketch = clarkson_woodruff_transform(A, sketch_n_rows)
     >>> sketch.shape
-    (200, 100)
+    (150, 100)
     >>> norm_A = np.linalg.norm(A)
     >>> norm_sketch = np.linalg.norm(sketch)
 
-    Now with high probability, the true norm ``norm_A`` is close to
-    the sketched norm ``norm_sketch`` in absolute value.
+    Now with high probability, thee true norm ``norm_A'' is close to
+    the sketched norm ``norm_sketch'' in absolute value.
 
     Similarly, applying our sketch preserves the solution to a linear
-    regression of :math:`\min \|Ax - b\|`.
+    regression of ``min ||Ax - b||''.
 
-    >>> from scipy import linalg
     >>> n_rows, n_columns, sketch_n_rows = 15000, 100, 200
-    >>> A = np.random.randn(n_rows, n_columns)
+    >>> A = np.random.randn(n_rows,n_columns)
     >>> b = np.random.randn(n_rows)
-    >>> x = np.linalg.lstsq(A, b, rcond=None)
-    >>> Ab = np.hstack((A, b.reshape(-1,1)))
-    >>> SAb = linalg.clarkson_woodruff_transform(Ab, sketch_n_rows)
+    >>> x = np.linalg.lstsq(A,b)
+    >>> Ab = np.hstack((A,b.reshape(-1,1)))
+    >>> SAb = clarkson_woodruff_transform(Ab, sketch_size=sketch_n_rows)
     >>> SA, Sb = SAb[:,:-1], SAb[:,-1]
-    >>> x_sketched = np.linalg.lstsq(SA, Sb, rcond=None)
+    >>> x_sketched = np.linalg.lstsq(SA,Sb)
 
-    As with the matrix norm example, ``np.linalg.norm(A @ x - b)``
-    is close to ``np.linalg.norm(A @ x_sketched - b)`` with high
+    As with the matrix norm example, ``np.linalg.norm(A @ x - b)''
+    is close to ``np.linalg.norm(A @ x_sketched - b)'' with high
     probability.
 
     References

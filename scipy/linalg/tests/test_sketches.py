@@ -108,6 +108,16 @@ class TestClarksonWoodruffTransform(object):
     def test_sketch_preserves_vector_norm(self):
         n_errors = 0
         n_sketch_rows = int(np.ceil(2. / (0.01 * 0.5**2)))
+        # Testing that the with-high-probability bound presented
+        # in the documentation is right. In particular, sketch
+        # dimension >= 2 / (delta * eps**2) should ensure that
+        # the Euclidean norm of a sketched vector ought to be
+        # within an epsilon multiplicative factor of the original.
+        # Here, we try eps=0.5 and delta=0.01 so that over
+        # all our seeds this norm should be presered to a 0.5
+        # factor.
+        n_errors = 0
+        n_sketch_rows = int(np.ceil(2. / (0.01 * 0.5**2))) # = 800
         true_norm = np.linalg.norm(self.x)
         for seed in self.seeds:
             sketch = clarkson_woodruff_transform(
@@ -118,3 +128,7 @@ class TestClarksonWoodruffTransform(object):
             if np.abs(true_norm - sketch_norm) > 0.5 * true_norm:
                 n_errors += 1
         assert_(n_errors == 0)
+
+
+if __name__ == "__main__":
+    np.testing.run_module_suite()
