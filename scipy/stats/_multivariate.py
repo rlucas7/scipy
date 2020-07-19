@@ -1205,6 +1205,7 @@ class matrix_normal_frozen(multi_rv_frozen):
         return self._dist.rvs(self.mean, self.rowcov, self.colcov, size,
                               random_state)
 
+
 # Set frozen generator docstrings from corresponding docstrings in
 # matrix_normal_gen and fill in default strings in class docstrings
 for name in ['logpdf', 'pdf', 'rvs']:
