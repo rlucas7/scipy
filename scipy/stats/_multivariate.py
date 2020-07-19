@@ -1212,8 +1212,7 @@ for name in ['logpdf', 'pdf', 'rvs']:
     method_frozen = matrix_normal_frozen.__dict__[name]
     method_frozen.__doc__ = doccer.docformat(method.__doc__,
                                              matnorm_docdict_noparams)
-    method.__doc__ = doccer.docformat(method.__doc__,
-                                      matnorm_docdict_params)
+    method.__doc__ = doccer.docformat(method.__doc__, matnorm_docdict_params)
 
 _dirichlet_doc_default_callparams = """\
 alpha : array_like
