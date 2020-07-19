@@ -1205,6 +1205,15 @@ class matrix_normal_frozen(multi_rv_frozen):
         return self._dist.rvs(self.mean, self.rowcov, self.colcov, size,
                               random_state)
 
+# Set frozen generator docstrings from corresponding docstrings in
+# matrix_normal_gen and fill in default strings in class docstrings
+for name in ['logpdf', 'pdf', 'rvs']:
+    method = matrix_normal_gen.__dict__[name]
+    method_frozen = matrix_normal_frozen.__dict__[name]
+    method_frozen.__doc__ = doccer.docformat(method.__doc__,
+                                             matnorm_docdict_noparams)
+    method.__doc__ = doccer.docformat(method.__doc__,
+                                      matnorm_docdict_params)
 
 _dirichlet_doc_default_callparams = """\
 alpha : array_like
@@ -4202,8 +4211,8 @@ multivariate_t = multivariate_t_gen()
 # Set frozen generator docstrings from corresponding docstrings in
 # matrix_normal_gen and fill in default strings in class docstrings
 for name in ['logpdf', 'pdf', 'rvs']:
-    method = matrix_normal_gen.__dict__[name]
-    method_frozen = matrix_normal_frozen.__dict__[name]
+    method = multivariate_t_gen.__dict__[name]
+    method_frozen = multivariate_t_frozen.__dict__[name]
     method_frozen.__doc__ = doccer.docformat(method.__doc__,
-                                             matnorm_docdict_noparams)
-    method.__doc__ = doccer.docformat(method.__doc__, matnorm_docdict_params)
+                                             mvt_docdict_noparams)
+    method.__doc__ = doccer.docformat(method.__doc__, mvt_docdict_params)
