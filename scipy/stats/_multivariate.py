@@ -3894,10 +3894,11 @@ class multivariate_t_gen(multi_rv_generic):
     The `loc` parameter specifies the location. The `shape` parameter specifies
     the positive definite shape matrix. The `df` parameter specifies the
     degrees of freedom.
+
     In addition to calling the methods below, the object itself may be called
     as a function to fix the location, shape matrix, and degrees of freedom
     parameters, returning a "frozen" multivariate t-distribution random.
-    .. versionadded:: 1.5.0
+
     Methods
     -------
     ``pdf(x, loc=None, shape=1, df=1, allow_singular=False)``
@@ -3906,12 +3907,14 @@ class multivariate_t_gen(multi_rv_generic):
         Log of the probability density function.
     ``rvs(loc=None, shape=1, df=1, size=1, random_state=None)``
         Draw random samples from a multivariate t-distribution.
+
     Parameters
     ----------
     x : array_like
         Quantiles, with the last axis of `x` denoting the components.
     %(_mvt_doc_default_callparams)s
     %(_doc_random_state)s
+
     Notes
     -----
     %(_mvt_doc_callparams_note)s
@@ -3919,16 +3922,23 @@ class multivariate_t_gen(multi_rv_generic):
     determinant and inverse of `shape` are computed as the pseudo-determinant
     and pseudo-inverse, respectively, so that `shape` does not need to have
     full rank.
+
     The probability density function for `multivariate_t` is
+
     .. math::
+
         f(x) = \frac{\Gamma(\nu + p)/2}{\Gamma(\nu/2)\nu^{p/2}\pi^{p/2}|\Sigma|^{1/2}}
                \exp\left[1 + \frac{1}{\nu} (\mathbf{x} - \boldsymbol{\mu})^{\top}
                \boldsymbol{\Sigma}^{-1}
                (\mathbf{x} - \boldsymbol{\mu}) \right]^{-(\nu + p)/2},
+
     where :math:`p` is the dimension of :math:`\mathbf{x}`,
     :math:`\boldsymbol{\mu}` is the :math:`p`-dimensional location,
     :math:`\boldsymbol{\Sigma}` the :math:`p \times p`-dimensional shape
     matrix, and :math:`\nu` is the degrees of freedom.
+
+    .. versionadded:: 1.5.0
+
     Examples
     --------
     >>> import matplotlib.pyplot as plt
@@ -3937,14 +3947,17 @@ class multivariate_t_gen(multi_rv_generic):
     >>> pos = np.dstack((x, y))
     >>> rv = multivariate_t([1.0, -0.5], [[2.1, 0.3], [0.3, 1.5]], df=2)
     >>> plt.contourf(x, y, rv.pdf(pos))
+
     """
 
     def __init__(self, seed=None):
         """
         Initialize a multivariate t-distributed random variable.
+
         Parameters
         ----------
         seed : Random state.
+
         """
         super(multivariate_t_gen, self).__init__(seed)
         self.__doc__ = doccer.docformat(self.__doc__, mvt_docdict_params)
@@ -3955,6 +3968,7 @@ class multivariate_t_gen(multi_rv_generic):
         """
         Create a frozen multivariate t-distribution. See
         `multivariate_t_frozen` for parameters.
+
         """
         return multivariate_t_frozen(loc=loc, shape=shape, df=df,
                                      allow_singular=allow_singular, seed=seed)
@@ -3962,14 +3976,17 @@ class multivariate_t_gen(multi_rv_generic):
     def pdf(self, x, loc=None, shape=1, df=1, allow_singular=False):
         """
         Multivariate t-distribution probability density function.
+
         Parameters
         ----------
         x : array_like
             Points at which to evaluate the probability density function.
         %(_mvt_doc_default_callparams)s
+
         Returns
         -------
         pdf : Probability density function evaluated at `x`.
+
         Examples
         --------
         >>> from scipy.stats import multivariate_t
@@ -3979,6 +3996,7 @@ class multivariate_t_gen(multi_rv_generic):
         >>> df = 7
         >>> multivariate_t.pdf(x, loc, shape, df)
         array([0.00075713])
+
         """
         dim, loc, shape, df = self._process_parameters(loc, shape, df)
         x = self._process_quantiles(x, dim)
@@ -3990,15 +4008,18 @@ class multivariate_t_gen(multi_rv_generic):
     def logpdf(self, x, loc=None, shape=1, df=1):
         """
         Log of the multivariate t-distribution probability density function.
+
         Parameters
         ----------
         x : array_like
             Points at which to evaluate the log of the probability density
             function.
         %(_mvt_doc_default_callparams)s
+
         Returns
         -------
         logpdf : Log of the probability density function evaluated at `x`.
+
         Examples
         --------
         >>> from scipy.stats import multivariate_t
@@ -4008,9 +4029,11 @@ class multivariate_t_gen(multi_rv_generic):
         >>> df = 7
         >>> multivariate_t.logpdf(x, loc, shape, df)
         array([-7.1859802])
+
         See Also
         --------
         pdf : Probability density function.
+
         """
         dim, loc, shape, df = self._process_parameters(loc, shape, df)
         x = self._process_quantiles(x, dim)
@@ -4019,6 +4042,7 @@ class multivariate_t_gen(multi_rv_generic):
 
     def _logpdf(self, x, loc, prec_U, log_pdet, df, dim):
         """Utility method `pdf`, `logpdf` for parameters.
+
         Parameters
         ----------
         x : ndarray
@@ -4035,10 +4059,12 @@ class multivariate_t_gen(multi_rv_generic):
             Degrees of freedom of the distribution.
         dim : int
             Dimension of the quantiles x.
+
         Notes
         -----
         As this function does no argument checking, it should not be called
         directly; use 'logpdf' instead.
+
         """
         dev  = x - loc
         maha = np.square(np.dot(dev, prec_U)).sum(axis=-1)
@@ -4055,17 +4081,20 @@ class multivariate_t_gen(multi_rv_generic):
     def rvs(self, loc=None, shape=1, df=1, size=1, random_state=None):
         """
         Draw random samples from a multivariate t-distribution.
+
         Parameters
         ----------
         %(_mvt_doc_default_callparams)s
         size : integer, optional
             Number of samples to draw (default 1).
         %(_doc_random_state)s
+
         Returns
         -------
         rvs : ndarray or scalar
             Random variates of size (`size`, `P`), where `P` is the
             dimension of the random variable.
+
         Examples
         --------
         >>> from scipy.stats import multivariate_t
@@ -4075,6 +4104,7 @@ class multivariate_t_gen(multi_rv_generic):
         >>> df = 7
         >>> multivariate_t.rvs(loc, shape, df)
         array([[0.93477495, 3.00408716]])
+
         """
         # For implementation details, see equation (3):
         #
@@ -4096,8 +4126,10 @@ class multivariate_t_gen(multi_rv_generic):
         return samples
 
     def _process_quantiles(self, x, dim):
-        """Adjust quantiles array so that last axis labels the components of
+        """
+        Adjust quantiles array so that last axis labels the components of
         each data point.
+
         """
         x = np.asarray(x, dtype=float)
         if x.ndim == 0:
@@ -4110,8 +4142,10 @@ class multivariate_t_gen(multi_rv_generic):
         return x
 
     def _process_parameters(self, loc, shape, df):
-        """Infer dimensionality from location array and shape matrix, handle
+        """
+        Infer dimensionality from location array and shape matrix, handle
         defaults, and ensure compatible dimensions.
+
         """
         if loc is None and shape is None:
             shape = np.asarray(1, dtype=float)
@@ -4169,9 +4203,11 @@ class multivariate_t_frozen(multi_rv_frozen):
                  seed=None):
         """
         Create a frozen multivariate t distribution.
+
         Parameters
         ----------
         %(_mvt_doc_default_callparams)s
+
         Examples
         --------
         >>> loc = np.zeros(3)
@@ -4182,6 +4218,7 @@ class multivariate_t_frozen(multi_rv_frozen):
         array([[ 0.81412036, -1.53612361,  0.42199647]])
         >>> dist.pdf([1, 1, 1])
         array([0.01237803])
+
         """
         self._dist = multivariate_t_gen(seed)
         dim, loc, shape, df = self._dist._process_parameters(loc, shape, df)
