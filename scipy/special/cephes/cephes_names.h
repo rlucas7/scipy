@@ -76,6 +76,7 @@
 #define round cephes_round
 #define shichi cephes_shichi
 #define sici cephes_sici
+#define stirling2 cephes_stirling2
 #define radian cephes_radian
 #define sindg cephes_sindg
 #define sinpi cephes_sinpi
