@@ -197,6 +197,7 @@ cephes_sources = [
   'cephes/scipy_iv.c',
   'cephes/shichi.c',
   'cephes/sici.c',
+  'cephes/stirling.c',
   'cephes/sindg.c',
   'cephes/sinpi.c',
   'cephes/spence.c',
