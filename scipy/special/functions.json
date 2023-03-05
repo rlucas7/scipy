@@ -1388,7 +1388,7 @@
             "cdft2_wrap": "dd->d"
         }
     },
-    "stirling.c": {
+    "stirling2": {
         "cephes.h": {
             "stirling2": "ii->i"
         }
