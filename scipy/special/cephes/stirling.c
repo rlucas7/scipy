@@ -22,7 +22,7 @@
  *  added by Lucas Roberts in 2023 after opening this issue
  *  https://github.com/scipy/scipy/issues/17890
  */
-
+#include "mconf.h"
 
 int stirling2(int n, int k){
     if (k < 0 || k > n){

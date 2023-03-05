@@ -13953,14 +13953,14 @@ add_newdoc("stirling2",
 
     Parameters
     ----------
-    n : int
+    n : array_like
         The number of items in the set
-    k : int
+    k : array_like
         The number of non-empty subsets to be made out of the n elements
 
     Returns
     -------
-    int
+    scalar or ndarray
         The number of ways to make k non-empty subsets out of n elements
 
     Examples

@@ -33,7 +33,7 @@ from ._complexstuff cimport (
 )
 
 from . cimport sf_error
-from ._cephes cimport Gamma, lgam, beta, lbeta, gammasgn
+from ._cephes cimport Gamma, lgam, beta, lbeta, gammasgn, stirling2
 from ._cephes cimport hyp2f1 as hyp2f1_wrap
 
 cdef extern from "specfun_wrappers.h":
