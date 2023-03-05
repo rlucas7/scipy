@@ -46,25 +46,6 @@ class TestStirling2:
     def test_triangle(self):
         assert stirling2(n, k) == expected
 
-    @pytest.mark.parametrize('n, k, expected', [
-        (nan, 1, nan),
-        (1, nan, nan),
-        (nan, -1, nan),
-        (-1, nan, nan),
-    ])
-    def test_nans(self):
-        assert stirling2(n, k) == expected
-
-    @pytest.mark.parametrize('n, k, expected', [
-        (inf, inf, nan),
-        (inf, 1, nan),
-        (1, inf, 0),
-        (inf, -1, nan),
-        (-1, inf, 0),
-    ])
-    def test_infs(self):
-        assert stirling2(n, k) == expected
-
     def test_modulus(self):
         # do not need to fix seed
         n = randrange(7, 12)

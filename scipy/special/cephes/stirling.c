@@ -25,9 +25,6 @@
 
 
 int stirling2(int n, int k){
-    if (isnan(n) || isnan(k) || isinf(n)) {
-        return NAN;
-    }
     if (k < 0 || k > n){
         return 0;
     }
