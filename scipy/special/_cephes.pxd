@@ -78,6 +78,7 @@ cdef extern from "cephes.h" nogil:
     double round(double x)
     int shichi(double x, double *si, double *ci)
     int sici(double x, double *si, double *ci)
+    int stirling2(int n, int k)
     double radian(double d, double m, double s)
     double sindg(double x)
     double sinpi(double x)

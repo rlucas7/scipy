@@ -1388,6 +1388,11 @@
             "cdft2_wrap": "dd->d"
         }
     },
+    "stirling.c": {
+        "cephes.h": {
+            "stirling2": "ii->i"
+        }
+    },
     "struve": {
         "cephes.h": {
             "struve_h": "dd->d"
