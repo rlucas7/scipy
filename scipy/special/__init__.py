@@ -734,6 +734,7 @@ Other special functions
    factorialk  -- Multifactorial of n of order k, n(!!...!).
    shichi      -- Hyperbolic sine and cosine integrals.
    sici        -- Sine and cosine integrals.
+   stirling2   -- Stirling numbers of the second kind.
    softmax     -- Softmax function.
    log_softmax -- Logarithm of softmax function.
    spence      -- Spence's function, also known as the dilogarithm.
@@ -812,6 +813,7 @@ __all__ = _ufuncs.__all__ + _basic.__all__ + _orthogonal.__all__ + [
     'spherical_yn',
     'spherical_in',
     'spherical_kn',
+    'stirling2',
 ]
 
 from scipy._lib._testutils import PytestTester

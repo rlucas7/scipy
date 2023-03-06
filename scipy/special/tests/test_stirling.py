@@ -3,8 +3,9 @@ from math import comb
 from numpy import isnan, nan, inf
 from scipy.special import stirling2
 
+
 class TestStirling2:
-     @pytest.mark.parametrize('n, k, expected', [
+    @pytest.mark.parametrize('n, k, expected', [
         (-1, 1, 0),
         (1, -1, 0),
         (0, 1, 0),

@@ -284,6 +284,7 @@ PARAMS: list[tuple[Callable, Callable, tuple[str, ...], str | None]] = [
     (special.yve, cython_special.yve, ('dd', 'dD'), None),
     (special.zetac, cython_special.zetac, ('d',), None),
     (special.owens_t, cython_special.owens_t, ('dd',), None)
+    (special.stirling2, cython_special.stirling2, ('ii',), None)
 ]
 
 
