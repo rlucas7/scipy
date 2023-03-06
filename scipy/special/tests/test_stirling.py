@@ -1,6 +1,6 @@
 import pytest
 from math import comb
-from numpy import isnan, nan, inf
+from random import randrange
 from scipy.special import stirling2
 
 
