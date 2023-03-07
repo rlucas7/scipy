@@ -25,11 +25,11 @@
 #include "mconf.h"
 
 int stirling2(int n, int k){
-    if (k < 0 || k > n){
+    if (k < 0 || k > n || n < 0){
         return 0;
     }
-    const int arraySize = n + 1;
-    int prev[arraySize]; // note: requires c99
+    int arraySize = n + 1;
+    int prev[arraySize];
     int curr[arraySize];
     for (int i=0; i<arraySize; i++){
         prev[i] = 0;
