@@ -23,18 +23,15 @@
  *  https://github.com/scipy/scipy/issues/17890
  */
 #include "mconf.h"
+#include <stdlib.h>
 
 int stirling2(int n, int k){
     if (k < 0 || k > n || n < 0){
         return 0;
     }
     int arraySize = n + 1;
-    int prev[arraySize];
-    int curr[arraySize];
-    for (int i=0; i<arraySize; i++){
-        prev[i] = 0;
-        curr[i] = 0;
-    }
+    int *prev = (int*)calloc(arraySize, sizeof(int));
+    int *curr = (int*)calloc(arraySize, sizeof(int));
     prev[0] = 1;
     if(n > 0){
         //outer for loop iterates over each row of triangle
@@ -50,5 +47,8 @@ int stirling2(int n, int k){
             }
         }
     }
-    return prev[k];
+    arraySize = prev[k]; // copy over value so we can free memory in arrays
+    free(prev);
+    free(curr);
+    return arraySize;
 }
