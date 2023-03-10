@@ -47,8 +47,8 @@ int stirling2(int n, int k){
             }
         }
     }
-    arraySize = prev[k]; // copy over value so we can free memory in arrays
+    output = prev[k]; // copy over value so we can free memory in arrays
     free(prev);
     free(curr);
-    return arraySize;
+    return output;
 }
