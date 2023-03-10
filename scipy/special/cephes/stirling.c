@@ -25,40 +25,41 @@
 #include "mconf.h"
 #include <stdlib.h>
 
-int stirling2(int n, int k){
-    if (k < 0 || k > n || n < 0){
+long stirling2(int n, int k){
+    if (n == 0 && k == 0){
+        return 1;
+    }
+    if (k <= 0 || k > n || n <= 0){
         return 0;
     }
     int arraySize = n + 1;
-    long output;
-    long *prev = calloc(arraySize, sizeof(long));
-    if (!prev) {
+    long *curr = malloc(arraySize * sizeof(long));
+    if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
         return -1;
     }
-    long *curr = calloc(arraySize, sizeof(long));
-    if (!curr) {
-        sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
-        free(prev);
-        return -1;
-     }
-    prev[0] = 1;
-    if(n > 0){
-        //outer for loop iterates over each row of triangle
-        for (int i=1; i<arraySize; i++){
-            // build up next row in curr
-            for (int j=1; j<arraySize; j++){
-                curr[j] = prev[j - 1];
-                curr[j] += prev[j] * j;
+    // initialize array to 1-here we're either doing the LHS and working to the
+    // right until we get to column k or we're working with a slanted down to
+    // the left array and we're scrolling that angled array from top to the
+    // bottom of the parallelogram as a subset of (n,k) pairs of the Stirling
+    // triangle.
+    for (int i = 0; i < arraySize; i++){
+        curr[i] = 1;
+    }
+    if (k <= n - k + 1) {
+        for (int i = 1; i < n - k + 1; i++){
+            for (int j = 1; j < k; j++){
+                curr[j] = (j + 1) * curr[j] + curr[j - 1];
             }
-            // copy curr row to prev
-            for (int j=0; j<arraySize; j++){
-                prev[j] = curr[j];
+        }
+    } else {
+        for (int i = 1; i < k; i++){
+            for (int j = 1; j < n - k + 1; j++){
+                curr[j] = (i + 1) * curr[j - 1] + curr[j];
             }
         }
     }
-    output = prev[k]; // copy over value so we can free memory in arrays
-    free(prev);
+    long output = curr[arraySize - 1];
     free(curr);
     return output;
 }
