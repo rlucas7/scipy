@@ -51,6 +51,7 @@ long stirling2(int n, int k){
             for (int j = 1; j < k; j++){
                 curr[j] = (j + 1) * curr[j] + curr[j - 1];
                 if (curr[j] <= 0){
+                    free(curr);
                     return -2; // numeric overflow
                 }
             }
@@ -60,6 +61,7 @@ long stirling2(int n, int k){
             for (int j = 1; j < n - k + 1; j++){
                 curr[j] = (i + 1) * curr[j - 1] + curr[j];
                 if (curr[j] <= 0){
+                    free(curr);
                     return -2; // numeric overflow
                 }
             }
