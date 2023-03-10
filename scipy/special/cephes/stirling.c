@@ -27,16 +27,16 @@
 
 long stirling2(int n, int k){
     if (n == 0 && k == 0){
-        return 1;
+        return 1L;
     }
     if (k <= 0 || k > n || n <= 0){
-        return 0;
+        return 0L;
     }
-    int arraySize = n + 1;
+    int arraySize = k <= n - k + 1 ? k : n - k + 1;
     long *curr = malloc(arraySize * sizeof(long));
     if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
-        return -1;
+        return -1L;
     }
     // initialize array to 1-here we're either doing the LHS and working to the
     // right until we get to column k or we're working with a slanted down to
@@ -44,18 +44,24 @@ long stirling2(int n, int k){
     // bottom of the parallelogram as a subset of (n,k) pairs of the Stirling
     // triangle.
     for (int i = 0; i < arraySize; i++){
-        curr[i] = 1;
+        curr[i] = 1L;
     }
     if (k <= n - k + 1) {
         for (int i = 1; i < n - k + 1; i++){
             for (int j = 1; j < k; j++){
                 curr[j] = (j + 1) * curr[j] + curr[j - 1];
+                if (curr[j] <= 0){
+                    return -2; // numeric overflow
+                }
             }
         }
     } else {
         for (int i = 1; i < k; i++){
             for (int j = 1; j < n - k + 1; j++){
                 curr[j] = (i + 1) * curr[j - 1] + curr[j];
+                if (curr[j] <= 0){
+                    return -2; // numeric overflow
+                }
             }
         }
     }
