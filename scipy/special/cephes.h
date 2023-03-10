@@ -109,7 +109,7 @@ extern double round(double x);
 extern int shichi(double x, double *si, double *ci);
 extern int sici(double x, double *si, double *ci);
 
-extern int stirling2(int n, int k);
+long int stirling2(int n, int k);
 
 extern double radian(double d, double m, double s);
 extern double sindg(double x);
