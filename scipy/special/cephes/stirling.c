@@ -30,8 +30,18 @@ int stirling2(int n, int k){
         return 0;
     }
     int arraySize = n + 1;
-    int *prev = (int*)calloc(arraySize, sizeof(int));
-    int *curr = (int*)calloc(arraySize, sizeof(int));
+    long output;
+    long *prev = calloc(arraySize, sizeof(long));
+    if (!prev) {
+        sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
+        return -1;
+    }
+    long *curr = calloc(arraySize, sizeof(long));
+    if (!curr) {
+        sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
+        free(prev);
+        return -1;
+     }
     prev[0] = 1;
     if(n > 0){
         //outer for loop iterates over each row of triangle
