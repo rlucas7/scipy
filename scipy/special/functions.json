@@ -1390,7 +1390,7 @@
     },
     "stirling2": {
         "cephes.h": {
-            "stirling2": "ii->i"
+            "stirling2": "ii->l"
         }
     },
     "struve": {
