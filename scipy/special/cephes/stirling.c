@@ -67,27 +67,46 @@ long stirling2(int n, int k){
     for (int i = 0; i < arraySize; i++){
         curr[i] = 1L;
     }
+    long tmp;
     if (k <= n - k + 1) {
         for (int i = 1; i < n - k + 1; i++){
             for (int j = 1; j < k; j++){
-                curr[j] = (j + 1) * curr[j] + curr[j - 1];
-                if (curr[j] <= 0){
-                    free(curr);
-                    return -2L; // numeric overflow
-                }
+	      if (curr[j] > LONG_MAX / (j + 1)) {
+		free(curr);
+		sf_error("stirling2", SF_ERROR_NO_RESULT,
+		         "integer overflow has occured");
+		return -1L;
+	      }
+	      tmp = curr[j] * (j + 1);
+	      if (tmp > LONG_MAX - curr[j - 1]) {
+		free(curr);
+		sf_error("stirling2", SF_ERROR_NO_RESULT,
+		         "integer overflow has occured");
+		return -1L;
+	      }
+	      curr[j] = tmp + curr[j - 1];
             }
         }
     } else {
         for (int i = 1; i < k; i++){
             for (int j = 1; j < n - k + 1; j++){
-                curr[j] = (i + 1) * curr[j - 1] + curr[j];
-                if (curr[j] <= 0){
-                    free(curr);
-                    return -2L; // numeric overflow
-                }
-            }
-        }
-    }
+	      if (curr[j - 1] > LONG_MAX / (i + 1)){
+		free(curr);
+		sf_error("stirling2", SF_ERROR_NO_RESULT,
+		         "integer overflow has occured");
+		return -1L;
+	      }
+	      tmp = curr[j - 1] * (i + 1);
+	      if (tmp > LONG_MAX - curr[j]) {
+		free(curr);
+		sf_error("stirling2", SF_ERROR_NO_RESULT, 
+		         "integer overflow has occured");
+		return -1L;
+	      }
+	      curr[j] = tmp + curr[j];
+          }
+      }
+  }
     long output = curr[arraySize - 1];
     free(curr);
     return output;
