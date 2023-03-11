@@ -38,11 +38,31 @@ long stirling2(int n, int k){
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
         return -1L;
     }
-    // initialize array to 1-here we're either doing the LHS and working to the
-    // right until we get to column k or we're working with a slanted down to
-    // the left array and we're scrolling that angled array from top to the
-    // bottom of the parallelogram as a subset of (n,k) pairs of the Stirling
-    // triangle.
+    /* Computes from the bottom up using the recurrence relation
+     * stirling2(n, k) = k * stirling2(n, k - 1) + stirling2(n - 1, k - 1)
+     * with boundary conditions: stirling2(n, 1) = 1, stirling2(n, n) = 1.
+     * The below implementation only computes the Stirling numbers necessary
+     * for the final result. Arranging the Stirling numbers in a triangle
+     * with stirling2(1, 1) at the top, n increasing from top to bottom and
+     * k increasing from left to right, to compute stirling2(n, k) one
+     * only needs to compute the values in the parallelogram with vertices at
+     * (1, 1), (k, k), (k, 1), (n, k). This is illustrated in the ASCII diagram
+     * below for stirling2(5, 3).
+     *
+     * x
+     * x x
+     * x x x
+     * o x x o
+     * o o x o o
+     * o o o o o o
+     *
+     * To minimize the memory needed, if k <= n - k + 1, an array of length k
+     * is allocated and the cells of the parallelogram are filled in order from
+     * left to right and then top to bottom. If k > n - k + 1, an array of
+     * length n - k + 1 is allocated and the cells are filled in order from top
+     * to bottom and then left to right. See
+     * https://github.com/scipy/scipy/pull/18103#discussion_r1130036365
+     */
     for (int i = 0; i < arraySize; i++){
         curr[i] = 1L;
     }
