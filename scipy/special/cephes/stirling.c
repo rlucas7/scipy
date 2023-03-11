@@ -37,7 +37,7 @@ long stirling2(int n, int k){
     long *curr = malloc(arraySize * sizeof(long));
     if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
-        return -1L;
+        return -2L;
     }
     /* Computes from the bottom up using the recurrence relation
      * stirling2(n, k) = k * stirling2(n, k - 1) + stirling2(n - 1, k - 1)
