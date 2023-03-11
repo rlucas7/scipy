@@ -13942,44 +13942,15 @@ add_newdoc("ndtri_exp",
     """)
 
 
-add_newdoc("stirling2",
-    r"""
-    stirling2(n, k)
+add_newdoc("_stirling2",
+    """
+    Internal function, use `stirling2` instead.
+    """
+)
 
-    Stirling number of the second kind. Counts the number of non-empty subsets
-    of `n` set items that can be made with `k` non-empty subsets. Both `n` and
-    `k` should be non-negative integers, Negative integers for either `n` or
-    `k` cause the function to return `0`. If there is an error allocating the
-    array for the computation a `-1` is returned and if an overflow occurs
-    during the computation a `-2` is returned.
+add_newdoc("_stirling2_inexact",
+    """
+    Internal function, use `stirling2` instead.
+    """
+)
 
-    Parameters
-    ----------
-    n : array_like
-        The number of items in the set
-    k : array_like
-        The number of non-empty subsets to be made out of the n elements
-
-    Returns
-    -------
-    scalar or ndarray
-        The number of ways to make k non-empty subsets out of n elements
-
-    Examples
-    --------
-    >>> import scipy.special as sc
-    >>> sc.stirling2(0,0)
-    1
-    >>> sc.stirling2(3,0)
-    0
-    >>> sc.stirling2(4,2)
-    7
-    >>> sc.stirling2(4,3)
-    6
-    >>> sc.stirling2(26,10)
-    -2
-
-    See Also
-    --------
-    comb, factorial
-    """)

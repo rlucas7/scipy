@@ -111,3 +111,29 @@ long stirling2(int n, int k){
     free(curr);
     return output;
 }
+
+
+double stirling2_inexact(long n, long k) {
+    long result;
+    if (n == 0 && k == 0){
+        return 1.0;
+    }
+    if (k <= 0 || k > n || n <= 0){
+        return 0.0;
+    }
+    if (n > INT_MAX || k > INT_MAX) {
+      result = -1;
+    }
+    else {
+      result = stirling2(n, k);
+    }
+    if (result < 0) {
+      /* Placeholder. This will use asymptotic approximation from
+       * Temme, N. M., (1993), Asymptotic Estimates of Stirling Numbers,
+       * Studies in Applied Mathematics, 89, doi: 10.1002/sapm1993893233.
+       */
+      sf_error("stirling2", SF_ERROR_NO_RESULT, NULL);
+      return NAN;
+    }
+    return (double)result;
+}
