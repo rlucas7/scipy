@@ -23,6 +23,7 @@
  *  https://github.com/scipy/scipy/issues/17890
  */
 #include "mconf.h"
+#include <limits.h>
 #include <stdlib.h>
 
 long stirling2(int n, int k){
