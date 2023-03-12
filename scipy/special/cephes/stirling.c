@@ -33,7 +33,7 @@ static uint64_t stirling2(long n, long k){
      * called from stirling2_approx which checks for these cases.
      */
     int arraySize = k <= n - k + 1 ? k : n - k + 1;
-    uint64_t *curr = malloc(arraySize * sizeof(int64_t));
+    uint64_t *curr = malloc(arraySize * sizeof(uint64_t));
     if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
         return -2;
