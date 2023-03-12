@@ -1,4 +1,3 @@
-import numpy as np
 import scipy.special as sc
 
 from scipy.special._ufuncs import _stirling2_approx
