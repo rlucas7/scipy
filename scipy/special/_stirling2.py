@@ -21,8 +21,10 @@ def stirling2(n, k, exact=True):
 
 
 def _stirling2_pyint(n, k):
+    if n == 0 and k == 0:
+        return 1
     if k <= 0 or k > n or n < 0:
-        return 1 if n == 0 else 0
+        return 0
     if k <= n - k + 1:
         current = [1]*k
         for i in range(1, n - k + 1):
