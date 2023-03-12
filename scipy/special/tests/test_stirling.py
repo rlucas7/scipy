@@ -63,7 +63,7 @@ def test_triangle_exact(n, k, expected):
     (10, [0, 1, 511, 9330, 34105, 42525, 22827, 5880, 750, 45, 1]),
 ])
 def test_triangle_inexact(n, expected):
-    """Test full triangle of values for 0 <= n <= 10
+    """Test triangle of values for 0 <= n <= 10 and 0 <= k <= n
 
     Values taken from Wikipedia
     https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind
