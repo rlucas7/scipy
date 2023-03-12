@@ -28,11 +28,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-static uint64_t stirling2(long n, long k){
+static uint64_t stirling2(uint64_t n, uint64_t k){
     /* Don't need to check for edge cases. This function is only meant to be
      * called from stirling2_approx which checks for these cases.
      */
-    unsigned int arraySize = k <= n - k + 1 ? k : n - k + 1;
+    uint64_t arraySize = k <= n - k + 1 ? k : n - k + 1;
     uint64_t *curr = malloc(arraySize * sizeof(uint64_t));
     if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
@@ -63,13 +63,13 @@ static uint64_t stirling2(long n, long k){
      * to bottom and then left to right. See
      * https://github.com/scipy/scipy/pull/18103#discussion_r1130036365
      */
-    for (unsigned int i = 0; i < arraySize; i++){
+    for (uint64_t i = 0; i < arraySize; i++){
         curr[i] = 1;
     }
     uint64_t tmp;
     if (k <= n - k + 1) {
-        for (unsigned int i = 1; i < n - k + 1; i++){
-            for (unsigned int j = 1; j < k; j++){
+        for (uint64_t i = 1; i < n - k + 1; i++){
+            for (uint64_t j = 1; j < k; j++){
 	      if (curr[j] > UINT64_MAX / (j + 1)) {
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT,
@@ -87,8 +87,8 @@ static uint64_t stirling2(long n, long k){
             }
         }
     } else {
-        for (unsigned int i = 1; i < k; i++){
-            for (unsigned int j = 1; j < n - k + 1; j++){
+        for (uint64_t i = 1; i < k; i++){
+            for (uint64_t j = 1; j < n - k + 1; j++){
 	      if (curr[j - 1] > UINT64_MAX / (i + 1)){
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT,
