@@ -1,4 +1,6 @@
 import numpy as np
+import scipy.special as sc
+
 from scipy.special._ufuncs import _stirling2_approx
 
 
@@ -55,6 +57,8 @@ def _stirling2_pyint(n, k):
         return 1
     if k <= 0 or k > n or n < 0:
         return 0
+    if k == n - 1:
+        return sc.comb(n, 2, exact=True)
     if k <= n - k + 1:
         current = [1]*k
         for i in range(1, n - k + 1):
