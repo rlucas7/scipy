@@ -1,23 +1,13 @@
 import numpy as np
-
-from scipy.special._ufuncs import _stirling2
-from scipy.special._ufuncs import _stirling2_inexact
+from scipy.special._ufuncs import _stirling2_approx
 
 
 def stirling2(n, k, exact=True):
+    """Needs updated docstring."""
     if exact:
-        if not (np.issubdtype(type(n), np.integer)
-                and np.issubdtype(type(k), np.integer)):
-            raise TypeError("Placeholder, need appropriate error message")
-        try:
-            output = _stirling2(n, k)
-        except TypeError:
-            output = -1
-        if output < 0:
-            return _stirling2_pyint(n, k)
-        return output
+        return _stirling2_pyint(n, k)
     else:
-        return _stirling2_inexact(n, k)
+        return _stirling2_approx(n, k)
 
 
 def _stirling2_pyint(n, k):

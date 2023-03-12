@@ -1388,14 +1388,9 @@
             "cdft2_wrap": "dd->d"
         }
     },
-    "_stirling2": {
+    "_stirling2_approx": {
         "cephes.h": {
-            "stirling2": "ii->l"
-        }
-    },
-    "_stirling2_inexact": {
-        "cephes.h": {
-            "stirling2_inexact": "ll->d"
+            "stirling2_approx": "ll->d"
         }
     },
     "struve": {

@@ -13941,16 +13941,8 @@ add_newdoc("ndtri_exp",
     log_ndtr, ndtri, ndtr
     """)
 
-
-add_newdoc("_stirling2",
+add_newdoc("_stirling2_approx",
     """
     Internal function, use `stirling2` instead.
     """
 )
-
-add_newdoc("_stirling2_inexact",
-    """
-    Internal function, use `stirling2` instead.
-    """
-)
-

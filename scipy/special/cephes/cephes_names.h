@@ -110,7 +110,6 @@
 #define kolmogc cephes_kolmogc
 #define kolmogci cephes_kolmogci
 #define owens_t cephes_owens_t
-#define stirling2 cephes_stirling2
-#define stirling2_inexact cephes_stirling2_inexact
+#define stirling2_approx cephes_stirling2_approx
 
 #endif

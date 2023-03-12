@@ -113,7 +113,7 @@ long stirling2(int n, int k){
 }
 
 
-double stirling2_inexact(long n, long k) {
+double stirling2_approx(long n, long k) {
     long result;
     if (n == 0 && k == 0){
         return 1.0;
