@@ -23,21 +23,18 @@
  *  https://github.com/scipy/scipy/issues/17890
  */
 #include "mconf.h"
-#include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
-long stirling2(int n, int k){
-    if (n == 0 && k == 0){
-        return 1L;
-    }
-    if (k <= 0 || k > n || n <= 0){
-        return 0L;
-    }
+static uint64_t stirling2(long n, long k){
+    /* Don't need to check for edge cases. This function is only meant to be
+     * called from stirling2_approx which checks for these cases.
+     */
     int arraySize = k <= n - k + 1 ? k : n - k + 1;
-    long *curr = malloc(arraySize * sizeof(long));
+    uint64_t *curr = malloc(arraySize * sizeof(int64_t));
     if (!curr) {
         sf_error("stirling2", SF_ERROR_NO_RESULT, "failed to allocate memory");
-        return -2L;
+        return -2;
     }
     /* Computes from the bottom up using the recurrence relation
      * stirling2(n, k) = k * stirling2(n, k - 1) + stirling2(n - 1, k - 1)
@@ -65,24 +62,24 @@ long stirling2(int n, int k){
      * https://github.com/scipy/scipy/pull/18103#discussion_r1130036365
      */
     for (int i = 0; i < arraySize; i++){
-        curr[i] = 1L;
+        curr[i] = 1;
     }
-    long tmp;
+    uint64_t tmp;
     if (k <= n - k + 1) {
         for (int i = 1; i < n - k + 1; i++){
             for (int j = 1; j < k; j++){
-	      if (curr[j] > LONG_MAX / (j + 1)) {
+	      if (curr[j] > UINT64_MAX / (j + 1)) {
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT,
 		         "integer overflow has occured");
-		return -1L;
+		return -1;
 	      }
 	      tmp = curr[j] * (j + 1);
-	      if (tmp > LONG_MAX - curr[j - 1]) {
+	      if (tmp > UINT64_MAX - curr[j - 1]) {
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT,
 		         "integer overflow has occured");
-		return -1L;
+		return -1;
 	      }
 	      curr[j] = tmp + curr[j - 1];
             }
@@ -90,44 +87,41 @@ long stirling2(int n, int k){
     } else {
         for (int i = 1; i < k; i++){
             for (int j = 1; j < n - k + 1; j++){
-	      if (curr[j - 1] > LONG_MAX / (i + 1)){
+	      if (curr[j - 1] > UINT64_MAX / (i + 1)){
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT,
 		         "integer overflow has occured");
-		return -1L;
+		return -1;
 	      }
 	      tmp = curr[j - 1] * (i + 1);
-	      if (tmp > LONG_MAX - curr[j]) {
+	      if (tmp > UINT64_MAX - curr[j]) {
 		free(curr);
 		sf_error("stirling2", SF_ERROR_NO_RESULT, 
 		         "integer overflow has occured");
-		return -1L;
+		return -1;
 	      }
 	      curr[j] = tmp + curr[j];
           }
       }
   }
-    long output = curr[arraySize - 1];
+    uint64_t output = curr[arraySize - 1];
     free(curr);
     return output;
 }
 
 
 double stirling2_approx(long n, long k) {
-    long result;
+    uint64_t result;
     if (n == 0 && k == 0){
         return 1.0;
     }
     if (k <= 0 || k > n || n <= 0){
         return 0.0;
     }
-    if (n > INT_MAX || k > INT_MAX) {
-      result = -1;
-    }
-    else {
+    else { // TODO: Add a check to detect cases where overflow is guaranteed
       result = stirling2(n, k);
     }
-    if (result < 0) {
+    if (!result) {
       /* Placeholder. This will use asymptotic approximation from
        * Temme, N. M., (1993), Asymptotic Estimates of Stirling Numbers,
        * Studies in Applied Mathematics, 89, doi: 10.1002/sapm1993893233.
