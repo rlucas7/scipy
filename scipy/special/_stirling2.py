@@ -53,12 +53,43 @@ def stirling2(n, k, exact=True):
 
 
 def _stirling2_pyint(n, k):
+    """Compute Stirling numbers of second kind with arbitrary precision ints
+
+     Computes from the bottom up using the recurrence relation
+     stirling2(n, k) = k * stirling2(n, k - 1) + stirling2(n - 1, k - 1)
+     with boundary conditions: stirling2(n, 1) = 1, stirling2(n, n) = 1.
+     The below implementation only computes the Stirling numbers necessary
+     for the final result. Arranging the Stirling numbers in a triangle
+     with stirling2(1, 1) at the top, n increasing from top to bottom and
+     k increasing from left to right, to compute stirling2(n, k) one
+     only needs to compute the values in the parallelogram with vertices at
+     (1, 1), (k, k), (k, 1), (n, k). This is illustrated in the ASCII diagram
+     below for stirling2(5, 3).
+
+     x
+     x x
+     x x x
+     o x x o
+     o o x o o
+     o o o o o o
+
+     To minimize the memory needed, if k <= n - k + 1, an array of length k
+     is allocated and the cells of the parallelogram are filled in order from
+     left to right and then top to bottom. If k > n - k + 1, an array of
+     length n - k + 1 is allocated and the cells are filled in order from top
+     to bottom and then left to right. See
+     https://github.com/scipy/scipy/pull/18103#discussion_r1130036365
+    """
+    # Check for boundary cases.
     if n == 0 and k == 0:
         return 1
     if k <= 0 or k > n or n < 0:
         return 0
+
+    # DLMF 26.8.15 https://dlmf.nist.gov/26.8#E15
     if k == n - 1:
         return sc.comb(n, 2, exact=True)
+
     if k <= n - k + 1:
         current = [1]*k
         for i in range(1, n - k + 1):
