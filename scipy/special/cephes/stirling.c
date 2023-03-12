@@ -1,4 +1,4 @@
-/* c implementation of Stirling numbers of the second kind */
+/* c implementation to approximate Stirling numbers of the second kind */
 
 /*
  *
@@ -14,8 +14,10 @@
  *  to be partitioned and k is the number of non-empty subsets.
  *  The values for n < 0 or k < 0 are interpreted as 0. If you
  *
- * ACCURACY: The method returns an unsigned integer type and
- *  the size of the type 32 bits.
+ * ACCURACY: Returns correctly rounded result to double precision
+ * if result does not overflow an unsigned 64 bit int. Currently
+ * returns nan if result overflows usigned 64 bit int, with plan
+ * to eventually use an asymptotic approximation in these cases.
  *
  *
  * NOTE: this file is *NOT* part of the ceph distribution and was
