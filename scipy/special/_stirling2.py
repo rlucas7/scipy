@@ -85,7 +85,7 @@ def _stirling2_pyint(n, k):
     if k <= 0 or k > n or n < 0:
         return 0
 
-    # DLMF 26.8.15 https://dlmf.nist.gov/26.8#E15
+    # DLMF 26.8.16 https://dlmf.nist.gov/26.8#E16
     if k == n - 1:
         return sc.comb(n, 2, exact=True)
 
