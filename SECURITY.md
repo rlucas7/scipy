@@ -14,7 +14,7 @@ we rely on the [pooch](https://github.com/fatiando/pooch) dependency to fetch da
 
 # Releases
 To mitigate the risk of supply chain attacks we rely on the [SciPy](https://github.com/scipy/scipy-release) release repo
-which is modeled after the [Numpy release](https://github.com/numpy/numpy-release) process. 
+which is modeled after the [Numpy release](https://github.com/numpy/numpy-release) process.
 
 General security guidelines on the scipy-release repo:
 - We require a linear history, so commit history is easy to inspect
@@ -25,6 +25,8 @@ General security guidelines on the scipy-release repo:
 - We allow cross-compiling provided we are able to afford the billing and have adequate maintainer time
 - We perform verification of the test suite passing after cross compilation either on the [scipy repo](https://github.com/scipy/scipy/tree/main/)
   or under QEMU
+
+We use pypi [trusted publishing](https://docs.pypi.org/trusted-publishers/).
 
 # Disclosure
 To report vulnerabilities please review the guidelines here to determine whether the vulnerability indeed needs to be reported
