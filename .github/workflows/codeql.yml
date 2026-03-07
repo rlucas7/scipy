@@ -98,7 +98,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        spin build
+        spin build -j 4
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
       with:
