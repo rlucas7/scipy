@@ -13,9 +13,9 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: ["main", "rlucas7/codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
+    branches: ["main", "codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
   pull_request:
-    branches: ["main", "rlucas7/codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
+    branches: ["main", "codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
   schedule:
     - cron: '33 21 * * 3'
 
