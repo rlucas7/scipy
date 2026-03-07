@@ -13,9 +13,9 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ "main", "maintenance/*", "maintenance/0.10.x", "maintenance/0.11.x", "maintenance/0.12.x", "maintenance/0.13.x", "maintenance/0.14.x", "maintenance/0.15.x", "maintenance/0.16.x", "maintenance/0.17.x", "maintenance/0.18.x", "maintenance/0.19.x", "maintenance/0.5.2.x", "maintenance/0.6.x", "maintenance/0.7.x", "maintenance/0.8.x", "maintenance/0.9.x", "maintenance/1.0.x", "maintenance/1.1.x", "maintenance/1.2.x", "maintenance/1.3.x", "maintenance/1.4.x", "maintenance/1.5.x", "maintenance/1.6.x" ]
+    branches: ["main", "rlucas7/codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
   pull_request:
-    branches: [ "main", "maintenance/*", "maintenance/0.10.x", "maintenance/0.11.x", "maintenance/0.12.x", "maintenance/0.13.x", "maintenance/0.14.x", "maintenance/0.15.x", "maintenance/0.16.x", "maintenance/0.17.x", "maintenance/0.18.x", "maintenance/0.19.x", "maintenance/0.5.2.x", "maintenance/0.6.x", "maintenance/0.7.x", "maintenance/0.8.x", "maintenance/0.9.x", "maintenance/1.0.x", "maintenance/1.1.x", "maintenance/1.2.x", "maintenance/1.3.x", "maintenance/1.4.x", "maintenance/1.5.x", "maintenance/1.6.x" ]
+    branches: ["main", "rlucas7/codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
   schedule:
     - cron: '33 21 * * 3'
 
@@ -68,10 +68,17 @@ jobs:
     # or others). This is typically only required for manual builds.
     # - name: Setup runtime (example)
     #   uses: actions/setup-example@v1
+    # - name: Install dependencies
+    #   run: |
+    #     git submodule update --init
+    #     sudo apt update
+    #     sudo apt install -y gcc g++ gfortran libopenblas-dev liblapack-dev pkg-config python3-pip python3-dev
+
+    #     python -m pip install -r requirements/build.txt -r requirements/dev.txt
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@c793b717bc78562f491db7b0e93a3a178b099162 # v4.32.5
+      uses: github/codeql-action/init@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
@@ -91,14 +98,8 @@ jobs:
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  make bootstrap'
-        echo '  make release'
-        exit 1
-
+        spin build
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@c793b717bc78562f491db7b0e93a3a178b099162 # v4.32.5
+      uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
       with:
         category: "/language:${{matrix.language}}"
