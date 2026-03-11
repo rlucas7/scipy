@@ -15,7 +15,7 @@ on:
   push:
     branches: ["main", "codeql-updates-sylwia", "maintenance/*"]
   pull_request:
-    branches: ["main", "codeql-updates-sylwia", "maintenance/*"]]
+    branches: ["main", "codeql-updates-sylwia", "maintenance/*"]
   schedule:
     - cron: '33 21 * * 3'
 
