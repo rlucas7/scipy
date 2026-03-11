@@ -13,9 +13,9 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: ["main", "codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
+    branches: ["main", "codeql-updates-sylwia", "maintenance/*"]
   pull_request:
-    branches: ["main", "codeql-updates-sylwia", "maintenance/*", "maintenance/1.5.x", "maintenance/1.6.x"]
+    branches: ["main", "codeql-updates-sylwia", "maintenance/*"]]
   schedule:
     - cron: '33 21 * * 3'
 
@@ -72,7 +72,8 @@ jobs:
       run: |
         git submodule update --init
         sudo apt update
-        sudo apt install -y gcc g++ gfortran libopenblas-dev liblapack-dev pkg-config python3-pip python3-dev
+        sudo apt install -y gcc g++ gfortran libopenblas-dev liblapack-dev pkg-config \
+          python3-pip python3-dev ccache
 
         python -m pip install -r requirements/build.txt -r requirements/dev.txt
 
@@ -89,6 +90,11 @@ jobs:
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
 
+    - name: Set up ccache
+      uses: ./.github/ccache
+      with:
+        workflow_name: ${{ github.workflow }}
+
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
     # to set the build mode to "manual" for that language. Then modify this step
@@ -103,3 +109,7 @@ jobs:
       uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
       with:
         category: "/language:${{matrix.language}}"
+
+    - name: Ccache performance
+      shell: bash -l {0}
+      run: ccache -s
