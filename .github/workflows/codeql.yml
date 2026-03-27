@@ -14,8 +14,19 @@ name: "CodeQL Advanced"
 on:
   push:
     branches: ["main", "codeql-updates", "maintenance/*", "maintenance/1.0.x", "maintenance/1.1.x", "maintenance/1.2.x", "maintenance/1.3.x", "maintenance/1.4.x", "maintenance/1.5.x", "maintenance/2.6.x"]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+      - 'tools/*'
+      - 'subprojects/*'
   pull_request:
     branches: ["main", "codeql-updates", "maintenance/*", "maintenance/1.3.x", "maintenance/1.4.x", "maintenance/1.5.x", "maintenance/1.6.x"]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+      - 'tools/*'
+      - 'subprojects/*'
+
   schedule:
     - cron: '33 21 * * 3'
 
