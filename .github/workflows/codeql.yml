@@ -14,6 +14,8 @@ name: "CodeQL Advanced"
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 permissions: {}
 
@@ -99,14 +101,6 @@ jobs:
         python -m pip install -r requirements/build.txt -r requirements/dev.txt
         spin build
 
-    - name: Ensure CodeQL trap cache directory exists (workaround)
-      if: matrix.language == 'c-cpp'
-      shell: bash
-      run: |
-        set -euxo pipefail
-        mkdir -p "$RUNNER_TEMP/trapCaches/cpp/tarballs"
-        ls -la "$RUNNER_TEMP/trapCaches/cpp" || true
-
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@c793b717bc78562f491db7b0e93a3a178b099162 # v4.32.5
       with:
@@ -131,3 +125,4 @@ jobs:
       uses: github/codeql-action/upload-sarif@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
       with:
         sarif_file: sarif-results/cpp.sarif
+
